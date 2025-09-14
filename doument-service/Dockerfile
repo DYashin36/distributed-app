@@ -1,9 +1,9 @@
 # Сборка
-FROM maven:3.8.3-openjdk-17 AS build
-WORKDIR /build
-COPY doument-service/pom.xml doument-service/pom.xml
-COPY doument-service/src doument-service/src
-RUN mvn clean package -DskipTests=true
+#FROM maven:3.8.3-openjdk-17 AS build
+#WORKDIR /build
+#COPY pom.xml .
+#COPY src ./src
+#RUN mvn clean package -DskipTests=true
 
 # Финальный образ
 FROM eclipse-temurin:17-jre-alpine

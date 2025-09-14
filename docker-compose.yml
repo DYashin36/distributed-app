@@ -4,9 +4,9 @@ services:
     image: postgres:16-alpine
     restart: always
     environment:
-      POSTGRES_USER: "${POSTGRES_USER}"          # из .env
-      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"  # из .env
-      POSTGRES_DB: "${POSTGRES_DB}"              # из .env
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_DB: "${POSTGRES_DB}"
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
       interval: 5s
@@ -15,14 +15,13 @@ services:
     ports:
       - "${POSTGRES_DB_PORT}:5432"
     volumes:
-      - ./db/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql  # убедись, что файл существует
+      - ./db/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
       - db-data:/var/lib/postgresql/data
-
 
   discovery-service:
     build:
-      context: .
-      dockerfile: discovery-service/Dockerfile
+      context: ./discovery
+      dockerfile: Dockerfile
     image: discovery-service
     restart: unless-stopped
     ports:
@@ -34,8 +33,8 @@ services:
 
   gateway-api:
     build:
-      context: .
-      dockerfile: gateway-api/Dockerfile
+      context: ./api-gateway
+      dockerfile: Dockerfile
     image: gateway-api
     restart: unless-stopped
     ports:
@@ -51,8 +50,8 @@ services:
 
   auth-service:
     build:
-      context: .
-      dockerfile: auth-service/Dockerfile
+      context: ./auth-service
+      dockerfile: Dockerfile
     image: auth-service
     restart: unless-stopped
     ports:
@@ -64,15 +63,14 @@ services:
       REFRESH_EXPIRATION: "${REFRESH_EXPIRATION}"
       ONE_TIME_TOKEN_EXPIRATION: "${ONE_TIME_TOKEN_EXPIRATION}"
       JWT_SECRET: "${JWT_SECRET}"
-
     depends_on:
       - service-db
 
-  doument-service:
+  document-service:   # <-- исправил название
     build:
-      context: .
-      dockerfile: doument-service/Dockerfile
-    image: doument-service
+      context: ./doument-service   # у тебя папка с опечаткой
+      dockerfile: Dockerfile
+    image: document-service
     restart: unless-stopped
     ports:
       - "${DOCUMENT_SERVICE_PORT}:${DOCUMENT_SERVICE_PORT}"
