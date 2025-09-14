@@ -1,0 +1,87 @@
+version: '3.8'
+
+services:
+
+  service-db:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_DB: "${POSTGRES_DB}"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -D postgres" ]
+      interval: 5s
+      timeout: 2s
+      retries: 25
+    ports:
+      - "${POSTGRES_DB_PORT}:5432"
+    volumes:
+      - ./db/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
+      - db-data:/var/lib/postgresql/data
+
+
+  discovery-service:
+    build:
+      context: .
+      dockerfile: discovery-service/Dockerfile
+    image: discovery-service
+    restart: unless-stopped
+    ports:
+      - "${DISCOVERY_SERVICE_PORT}:${DISCOVERY_SERVICE_PORT}"
+    env_file:
+      - .env
+    environment:
+      DISCOVERY_SERVICE_PORT: "${DISCOVERY_SERVICE_PORT}"
+
+  gateway-api:
+    build:
+      context: .
+      dockerfile: gateway-api/Dockerfile
+    image: gateway-api
+    restart: unless-stopped
+    ports:
+      - "${GATEWAY_API_PORT}:${GATEWAY_API_PORT}"
+    env_file:
+      - .env
+    environment:
+      GATEWAY_API_PORT: "${GATEWAY_API_PORT}"
+      EXPIRATION: "${EXPIRATION}"
+      REFRESH_EXPIRATION: "${REFRESH_EXPIRATION}"
+      ONE_TIME_TOKEN_EXPIRATION: "${ONE_TIME_TOKEN_EXPIRATION}"
+      JWT_SECRET: "${JWT_SECRET}"
+
+  auth-service:
+    build:
+      context: .
+      dockerfile: auth-service/Dockerfile
+    image: auth-service
+    restart: unless-stopped
+    ports:
+      - "${AUTH_SERVICE_PORT}:${AUTH_SERVICE_PORT}"
+    env_file:
+      - .env
+    environment:
+      EXPIRATION: "${EXPIRATION}"
+      REFRESH_EXPIRATION: "${REFRESH_EXPIRATION}"
+      ONE_TIME_TOKEN_EXPIRATION: "${ONE_TIME_TOKEN_EXPIRATION}"
+      JWT_SECRET: "${JWT_SECRET}"
+
+    depends_on:
+      - service-db
+
+  doument-service:
+    build:
+      context: .
+      dockerfile: doument-service/Dockerfile
+    image: doument-service
+    restart: unless-stopped
+    ports:
+      - "${DOCUMENT_SERVICE_PORT}:${DOCUMENT_SERVICE_PORT}"
+    env_file:
+      - .env
+    environment:
+      EXPIRATION: "${EXPIRATION}"
+      REFRESH_EXPIRATION: "${REFRESH_EXPIRATION}"
+      ONE_TIME_TOKEN_EXPIRATION: "${ONE_TIME_TOKEN_EXPIRATION}"
+      JWT_SECRET: "${JWT_SECRET}"
