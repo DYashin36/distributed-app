@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: document-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/yourdb
+    username: dbuser
+    password: dbpass
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 9002
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true

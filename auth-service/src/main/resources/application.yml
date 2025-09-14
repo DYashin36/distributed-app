@@ -1,0 +1,34 @@
+server:
+  port: 9001
+
+spring:
+  application:
+    name: auth-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/authdb
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+
+  security:
+    session:
+      creation-policy: stateless
+    jwt:
+      secret: back-to-the-future
+      expiration: 3600000
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true

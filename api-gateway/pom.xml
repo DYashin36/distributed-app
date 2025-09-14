@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.5.5</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.example</groupId>
+	<artifactId>api-gateway</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>api-gateway</name>
+	<description>root module for all</description>
+	<url/>
+	<licenses>
+		<license/>
+	</licenses>
+	<developers>
+		<developer/>
+	</developers>
+	<scm>
+		<connection/>
+		<developerConnection/>
+		<tag/>
+		<url/>
+	</scm>
+	<properties>
+		<java.version>17</java.version>
+		<spring-cloud.version>2025.0.0</spring-cloud.version>
+	</properties>
+	<dependencies>
+		<!-- Core для reactive web (Gateway использует WebFlux) -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>  <!-- Undertow заменяется на это для минимализма -->
+		</dependency>
+
+		<!-- Gateway для роутинга -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-gateway</artifactId>
+		</dependency>
+
+		<!-- Config Server для внешней конфигурации -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+
+		<!-- Eureka клиент для discovery (в профиле) -->
+		<!-- Lombok для упрощения кода (опционально, но полезно) -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+
+		<!-- OAuth2: client для token relay, resource server для валидации токенов, JOSE для JWT -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-resource-server</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-jose</artifactId>
+		</dependency>
+
+		<!-- Actuator для health checks и мониторинга (базовый) -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+	</dependencies>
+
+	<!-- Только профиль для Eureka (уберите kubernetes) -->
+	<profiles>
+		<profile>
+			<id>eureka</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+
+</project>

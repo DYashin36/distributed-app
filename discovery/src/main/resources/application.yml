@@ -1,0 +1,17 @@
+server:
+  port: 8761  # Default Eureka port; change if needed
+
+spring:
+  application:
+    name: discovery-service
+
+eureka:
+  instance:
+    prefer-ip-address: false  # Keep if you prefer hostname; set to true for IP
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/  # Self-referencing for standalone; update for clustering
+  server:
+    waitTimeInMsWhenSyncEmpty: 0  # For faster startup in dev
