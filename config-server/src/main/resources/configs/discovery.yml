@@ -9,3 +9,6 @@ eureka:
   client:
     register-with-eureka: false
     fetch-registry: false
+
+eureka.client.registry-fetch-interval-seconds: 5
+eureka.client.initial-instance-info-replication-interval-seconds: 5

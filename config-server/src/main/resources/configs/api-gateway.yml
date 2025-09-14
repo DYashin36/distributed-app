@@ -4,8 +4,13 @@ server:
 spring:
   application:
     name: api-gateway
+  main:
+    web-application-type: reactive
 
 eureka:
   client:
     service-url:
       defaultZone: http://discovery:8761/eureka/
+
+eureka.client.registry-fetch-interval-seconds: 5
+eureka.client.initial-instance-info-replication-interval-seconds: 5

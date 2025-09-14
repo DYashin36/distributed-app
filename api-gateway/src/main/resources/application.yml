@@ -1,11 +1,23 @@
 spring:
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+
   application:
     name: api-gateway
+  config:
+        import: optional:configserver:http://localhost:8888
 
 eureka:
   client:
     serviceUrl:
       defaultZone: ${EUREKA_URL}
+    register-with-eureka: true
+    fetch-registry: true
     registry-fetch-interval-seconds: 10
 
 logging:

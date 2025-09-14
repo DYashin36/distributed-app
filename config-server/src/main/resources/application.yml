@@ -4,8 +4,16 @@ server:
 spring:
   application:
     name: config-server
+  profiles:
+    active: native
   cloud:
     config:
       server:
         native:
           search-locations: classpath:/configs
+
+eureka:
+  client:
+    enabled: false      # полностью отключаем Eureka клиент
+    register-with-eureka: false
+    fetch-registry: false
