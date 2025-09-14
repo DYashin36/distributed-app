@@ -8,5 +8,5 @@
 # Финальный образ
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
-COPY --from=build /build/discovery/target/*.jar app.jar
+COPY target/*.jar app.jar
 CMD ["java", "-jar", "app.jar"]
