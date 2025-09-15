@@ -85,11 +85,11 @@ services:
       - discovery
       - config-server
 
-  document-service:   # <-- исправил название
+  doument-service:   # <-- исправил название
     build:
       context: ./doument-service   # у тебя папка с опечаткой
       dockerfile: Dockerfile
-    image: document-service
+    image: doument-service
     restart: unless-stopped
     ports:
       - "${DOCUMENT_SERVICE_PORT}:${DOCUMENT_SERVICE_PORT}"

@@ -14,6 +14,10 @@ spring:
 
 eureka:
   client:
-    enabled: false      # полностью отключаем Eureka клиент
-    register-with-eureka: false
-    fetch-registry: false
+    enabled: true
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://discovery:8761/eureka/
+  instance:
+    prefer-ip-address: true
