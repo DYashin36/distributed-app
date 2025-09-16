@@ -2,12 +2,21 @@ spring:
   application:
     name: api-gateway
 
-  cloud:
-    config:
-      uri: http://config-server:8888
-      fail-fast: true
+  config:
+    import: configserver:http://config-server:8888
 
 eureka:
   client:
+    register-with-eureka: true
+    fetch-registry: true
+    webclient:
+      enabled: true
     service-url:
       defaultZone: http://discovery:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+logging:
+  level:
+    org.springframework.web.reactive.function.client: info
+    org.springframework.cloud.gateway: info

@@ -40,8 +40,8 @@ services:
       - service-db
       - discovery
     environment:
-      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
-      - SPRING_CLOUD_CONFIG_FAIL_FAST=true
+        - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery:8761/eureka/
+        - SPRING_CLOUD_CONFIG_FAIL_FAST=true
 
 
   api-gateway:

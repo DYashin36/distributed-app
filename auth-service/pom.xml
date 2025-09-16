@@ -5,12 +5,11 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<!-- НАСЛЕДУЕМ КОРНЕВОЙ POM ПРОЕКТА -->
 	<parent>
 		<groupId>com.example</groupId>
-		<artifactId>distributed-app</artifactId>      <!-- корневой модуль -->
+		<artifactId>distributed-app</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath> <!-- путь до root pom -->
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 
 	<groupId>com.example</groupId>
@@ -63,15 +62,18 @@
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
+			<version>0.11.5</version>
 		</dependency>
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-impl</artifactId>
+			<version>0.11.5</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-jackson</artifactId>
+			<version>0.11.5</version>
 			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
@@ -83,6 +85,23 @@
 				<version>${spring-cloud.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt-api</artifactId>
+				<version>0.11.5</version>
+			</dependency>
+			<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt-impl</artifactId>
+				<version>0.11.5</version>
+				<scope>runtime</scope>
+			</dependency>
+			<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt-jackson</artifactId>
+				<version>0.11.5</version>
+				<scope>runtime</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
