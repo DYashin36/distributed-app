@@ -1,11 +1,23 @@
 server:
-  port: 8080
+  port: 8081
 
 spring:
   application:
     name: api-gateway
   main:
     web-application-type: reactive
+
+  cloud:
+    gateway:
+      routes:
+        - id: doument-service
+          uri: lb://DOUMENT-SERVICE
+          predicates:
+            - Path=/document/**
+        - id: auth-service
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/auth/**
 
 eureka:
   client:

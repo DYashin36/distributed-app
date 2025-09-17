@@ -1,6 +1,10 @@
 spring:
   application:
     name: doument-service
+  security:
+    jwt:
+      secret: back-to-the-future   # должен совпадать с auth-service
+      expiration: 3600000          # можно, если пригодится
   datasource:
       url: ${POSTGRES_URL}
       username: ${POSTGRES_USER}

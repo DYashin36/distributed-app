@@ -1,6 +1,6 @@
 spring:
   application:
-    name: doument-service   # исправил опечатку 'doument' -> 'document-service'
+    name: doument-service
   cloud:
     config:
       discovery:

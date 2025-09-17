@@ -5,6 +5,21 @@ spring:
   config:
     import: configserver:http://config-server:8888
 
+  main:
+    web-application-type: reactive
+
+  cloud:
+    gateway:
+      routes:
+        - id: doument-service
+          uri: lb://DOUMENT-SERVICE
+          predicates:
+            - Path=/document/**
+        - id: auth-service
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/auth/**
+
 eureka:
   client:
     register-with-eureka: true
@@ -20,3 +35,6 @@ logging:
   level:
     org.springframework.web.reactive.function.client: info
     org.springframework.cloud.gateway: info
+
+eureka.client.registry-fetch-interval-seconds: 5
+eureka.client.initial-instance-info-replication-interval-seconds: 5
