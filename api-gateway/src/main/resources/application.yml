@@ -1,43 +1,43 @@
-
+server:
+  port: ${GATEWAY_API_PORT:8081}
 
 spring:
   application:
     name: api-gateway
 
+  main:
+    web-application-type: reactive
 
   config:
     import: configserver:http://config-server:8888
-server:
-  port: ${GATEWAY_API_PORT:8081}
 
+  cloud:
+    gateway:
+      routes:
+        - id: document-service
+          uri: lb://DOCUMENT-SERVICE
+          predicates:
+            - Path=/document/**
+        - id: auth-service
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/auth/**
 
-#spring:
-#  main:
-#    web-application-type: reactive
-#
-#  application:
-#    name: api-gateway
-#
-#  cloud:
-#    config:
-#      uri: http://config-server:8888
-#
-#  config:
-#    import: optional:configserver:http://config-server:8888
-#
-#eureka:
-#  client:
-#    webclient:
-#      enabled: true
-#    register-with-eureka: true
-#    fetch-registry: true
-#    registry-fetch-interval-seconds: 10
-#    service-url:
-#      defaultZone: http://discovery:8761/eureka/
-#  instance:
-#    prefer-ip-address: true
-#
-#logging:
-#  level:
-#    org.springframework.web.reactive.function.client: info
-#    org.springframework.cloud.gateway: info
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    webclient:
+      enabled: true
+    service-url:
+      defaultZone: http://discovery:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+logging:
+  level:
+    org.springframework.web.reactive.function.client: info
+    org.springframework.cloud.gateway: info
+
+eureka.client.registry-fetch-interval-seconds: 5
+eureka.client.initial-instance-info-replication-interval-seconds: 5
