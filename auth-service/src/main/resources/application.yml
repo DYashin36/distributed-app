@@ -21,8 +21,8 @@ spring:
     session:
       creation-policy: stateless
     jwt:
-      secret: back-to-the-future
-      expiration: 3600000
+      secret: ${JWT_SECRET}
+      expiration: ${EXPIRATION}
 
 eureka:
   client:

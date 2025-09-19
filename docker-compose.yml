@@ -1,23 +1,5 @@
 services:
 
-  service-db:
-    image: postgres:16-alpine
-    restart: always
-    environment:
-      POSTGRES_USER: "${POSTGRES_USER}"
-      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-      POSTGRES_DB: "${POSTGRES_DB}"
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
-      interval: 5s
-      timeout: 2s
-      retries: 25
-    ports:
-      - "${POSTGRES_DB_PORT}:5432"
-    volumes:
-      - ./db/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
-      - db-data:/var/lib/postgresql/data
-
   discovery:
     build:
       context: ./discovery
@@ -37,7 +19,6 @@ services:
     ports:
       - "8888:8888"
     depends_on:
-      - service-db
       - discovery
     environment:
         - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery:8761/eureka/
@@ -61,7 +42,6 @@ services:
       ONE_TIME_TOKEN_EXPIRATION: "${ONE_TIME_TOKEN_EXPIRATION}"
       JWT_SECRET: "${JWT_SECRET}"
     depends_on:
-      - service-db
       - discovery
       - config-server
 
@@ -81,7 +61,6 @@ services:
       ONE_TIME_TOKEN_EXPIRATION: "${ONE_TIME_TOKEN_EXPIRATION}"
       JWT_SECRET: "${JWT_SECRET}"
     depends_on:
-      - service-db
       - discovery
       - config-server
 
@@ -101,7 +80,6 @@ services:
       ONE_TIME_TOKEN_EXPIRATION: "${ONE_TIME_TOKEN_EXPIRATION}"
       JWT_SECRET: "${JWT_SECRET}"
     depends_on:
-      - service-db
       - discovery
       - config-server
 

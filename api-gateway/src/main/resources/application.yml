@@ -5,6 +5,12 @@ spring:
   application:
     name: api-gateway
 
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          secret-key: ${JWT_SECRET}
+
   main:
     web-application-type: reactive
 
@@ -14,8 +20,8 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: document-service
-          uri: lb://DOCUMENT-SERVICE
+        - id: doument-service
+          uri: lb://DOUMENT-SERVICE
           predicates:
             - Path=/document/**
         - id: auth-service

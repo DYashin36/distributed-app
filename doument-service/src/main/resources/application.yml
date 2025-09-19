@@ -3,12 +3,17 @@ spring:
     name: doument-service
   security:
     jwt:
-      secret: back-to-the-future   # должен совпадать с auth-service
+      secret: ${JWT_SECRET}
       expiration: 3600000          # можно, если пригодится
   datasource:
       url: ${POSTGRES_URL}
       username: ${POSTGRES_USER}
       password: ${POSTGRES_PASSWORD}
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    schemas: doument_service
+    locations: classpath:db/migration
   jpa:
     hibernate:
       ddl-auto: update

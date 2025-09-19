@@ -13,15 +13,9 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                // Отключаем CSRF, т.к. работаем не с формами, а с JWT
-                .csrf(AbstractHttpConfigurer::disable)
-
-                // Настройка авторизации
+        http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        // Логин и регистрация доступны без токена
                         .requestMatchers("/auth/**").permitAll()
-                        // Остальные запросы требуют аутентификации
                         .anyRequest().authenticated()
                 );
 
